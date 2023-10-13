@@ -2,12 +2,22 @@ import { doc, updateDoc } from "firebase/firestore";
 import { useEffect, useReducer, useState } from "react";
 import { db } from "../firebase/firebase";
 
+interface EditState {
+  loading: boolean | null;
+  error: string | null;
+}
+
+type EditAction =
+  | { type: "LOADING" }
+  | { type: "EDITED_DOC" }
+  | { type: "ERROR"; payload: string };
+
 const initialState = {
   loading: null,
   error: null,
 };
 
-const insertReducer = (state, action) => {
+const insertReducer = (state: EditState, action: EditAction) => {
   switch (action.type) {
     case "LOADING":
       return { loading: true, error: null };
@@ -25,13 +35,13 @@ export function useEditDocument(docCollection: string) {
 
   const [cancelled, setCancelled] = useState(false);
 
-  const checkCancelBeforeDispath = (action) => {
+  const checkCancelBeforeDispath = (action: EditAction) => {
     if (!cancelled) {
       dispatch(action);
     }
   };
 
-  const editDocument = async (documentId, updatedData) => {
+  const editDocument = async (documentId: any, updatedData: any) => {
     checkCancelBeforeDispath({ type: "LOADING" });
 
     try {
@@ -40,14 +50,16 @@ export function useEditDocument(docCollection: string) {
       await updateDoc(documentRef, updatedData);
       checkCancelBeforeDispath({
         type: "EDITED_DOC",
-        payload: editDocument,
       });
     } catch (error) {
-      console.log(error);
-      checkCancelBeforeDispath({
-        type: "ERROR",
-        payload: error.message,
-      });
+      if (typeof error === "string") {
+        checkCancelBeforeDispath({
+          type: "ERROR",
+          payload: error || "An error occurred",
+        });
+      } else {
+        console.error("Erro desconhecido:", error);
+      }
     }
   };
 

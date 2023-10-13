@@ -6,10 +6,6 @@ interface InsertDocumentProps {
   docCollection: string;
 }
 
-interface InsertDocumentProps {
-  docCollection: string;
-}
-
 interface InsertState {
   loading: boolean | null;
   error: string | null;

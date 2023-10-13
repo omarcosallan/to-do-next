@@ -1,13 +1,23 @@
+import { deleteDoc, doc } from "firebase/firestore";
 import { useEffect, useReducer, useState } from "react";
 import { db } from "../firebase/firebase";
-import { deleteDoc, doc } from "firebase/firestore";
+
+interface DeleteState {
+  loading: boolean | null;
+  error: string | null;
+}
+
+type DeleteAction =
+  | { type: "LOADING" }
+  | { type: "DELETED_DOC" }
+  | { type: "ERROR"; payload: string };
 
 const initialState = {
   loading: null,
   error: null,
 };
 
-const deleteReducer = (state, action) => {
+const deleteReducer = (state: DeleteState, action: DeleteAction) => {
   switch (action.type) {
     case "LOADING":
       return { loading: true, error: null };
@@ -20,18 +30,18 @@ const deleteReducer = (state, action) => {
   }
 };
 
-export function useDeleteDocument(docCollection) {
+export function useDeleteDocument(docCollection: "string") {
   const [response, dispatch] = useReducer(deleteReducer, initialState);
 
   const [cancelled, setCancelled] = useState(false);
 
-  const checkCancelBeforeDispath = (action) => {
+  const checkCancelBeforeDispath = (action: DeleteAction) => {
     if (!cancelled) {
       dispatch(action);
     }
   };
 
-  const deleteDocument = async (documentId) => {
+  const deleteDocument = async (documentId: string) => {
     checkCancelBeforeDispath({ type: "LOADING" });
 
     try {
@@ -40,13 +50,16 @@ export function useDeleteDocument(docCollection) {
 
       checkCancelBeforeDispath({
         type: "DELETED_DOC",
-        payload: deleteDocument,
       });
     } catch (error) {
-      checkCancelBeforeDispath({
-        type: "ERROR",
-        payload: error.message,
-      });
+      if (typeof error === "string") {
+        checkCancelBeforeDispath({
+          type: "ERROR",
+          payload: error || "An error occurred",
+        });
+      } else {
+        console.error("Erro desconhecido:", error);
+      }
     }
   };
 
