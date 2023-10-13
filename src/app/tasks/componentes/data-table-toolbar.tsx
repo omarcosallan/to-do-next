@@ -16,11 +16,17 @@ export function DataTableToolbar<TData>({
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
+  const options = statuses.map((status) => ({
+    label: status.label,
+    value: status.value,
+    icon: status.icon,
+  }));
+
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
       <div className="flex flex-wrap items-center gap-4 py-4">
         <Input
-          placeholder="Filter title..."
+          placeholder="Filter title"
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
@@ -31,7 +37,7 @@ export function DataTableToolbar<TData>({
           <DataTableFacetedFilter
             column={table.getColumn("concluded")}
             title="Status"
-            options={statuses}
+            options={options}
           />
         )}
 

@@ -1,10 +1,7 @@
 import { useAuth } from "@/context/AuthContext";
-import { useFilterType } from "@/context/FilterType";
 import { db } from "@/firebase/firebase";
-import { FilterType } from "@/types/filters";
 import { Task } from "@/types/task";
 import {
-  Timestamp,
   collection,
   onSnapshot,
   orderBy,
@@ -12,6 +9,7 @@ import {
   where,
 } from "firebase/firestore";
 import error from "next/error";
+import { type } from "os";
 import { useEffect, useState } from "react";
 
 interface FetchDocumentsProps {
@@ -22,8 +20,6 @@ export function useFetchDocuments({ docCollection }: FetchDocumentsProps) {
   const { user } = useAuth();
   const [documents, setDocuments] = useState<Task[]>([]);
   const [isFetching, setIsFetching] = useState(true);
-  const { type } = useFilterType();
-
   useEffect(() => {
     if (!user) return;
 
@@ -31,55 +27,12 @@ export function useFetchDocuments({ docCollection }: FetchDocumentsProps) {
       const collectionRef = collection(db, docCollection);
 
       try {
-        let q;
+        const q = await query(
+          collectionRef,
+          where("createdBy", "==", user?.uid),
+          orderBy("createdAt", "desc")
+        );
 
-        if (type === FilterType.PENDING) {
-          q = await query(
-            collectionRef,
-            where("createdBy", "==", user?.uid),
-            where("concluded", "==", false),
-            where("finishIn", ">=", Timestamp.now()),
-            orderBy("finishIn", "desc")
-          );
-        } else if (type === FilterType.CONCLUDED) {
-          q = await query(
-            collectionRef,
-            where("createdBy", "==", user?.uid),
-            where("concluded", "==", true),
-            orderBy("createdAt", "desc")
-          );
-        } else if (type === FilterType.EXPIRED) {
-          q = await query(
-            collectionRef,
-            where("createdBy", "==", user?.uid),
-            where("concluded", "==", false),
-            where("finishIn", "<", Timestamp.now()),
-            orderBy("finishIn", "desc")
-          );
-        } else if (type === FilterType.TODAY) {
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
-
-          const endOfDay = new Date(today);
-          endOfDay.setHours(23, 59, 59, 999);
-
-          const startTimestamp = Timestamp.fromDate(today);
-          const endTimestamp = Timestamp.fromDate(endOfDay);
-
-          q = await query(
-            collectionRef,
-            where("createdBy", "==", user?.uid),
-            where("finishIn", ">=", startTimestamp),
-            where("finishIn", "<=", endTimestamp),
-            orderBy("finishIn", "desc")
-          );
-        } else {
-          q = await query(
-            collectionRef,
-            where("createdBy", "==", user?.uid),
-            orderBy("createdAt", "desc")
-          );
-        }
         onSnapshot(q, (querySnapshot) => {
           const newDocuments: Task[] = querySnapshot.docs.map((doc) => ({
             id: doc.id,

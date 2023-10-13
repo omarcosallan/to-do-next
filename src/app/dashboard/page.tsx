@@ -33,9 +33,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useAuth } from "@/context/AuthContext";
-import { useFilterType } from "@/context/FilterType";
 import { useFetchDocuments } from "@/hooks/useFetchDocuments";
-import { FilterType } from "@/types/filters";
 import { alertTexts } from "@/utils/alert-text";
 import { categorizeTasks } from "@/utils/categorize-tasks";
 import {
@@ -53,8 +51,6 @@ export default function Dashboard() {
   const { documents, isFetching } = useFetchDocuments({
     docCollection: "tasks",
   });
-  const { setType } = useFilterType();
-  setType(FilterType.ALL);
 
   const { concludedDocuments, noConcludedDocuments, expiredDocuments } =
     categorizeTasks(documents);

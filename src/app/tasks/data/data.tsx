@@ -5,12 +5,12 @@ import {
 
 export const statuses = [
   {
-    value: true,
+    value: "true",
     label: "Completed",
     icon: CheckCircledIcon,
   },
   {
-    value: false,
+    value: "false",
     label: "Pending",
     icon: ExclamationTriangleIcon,
   },

@@ -23,15 +23,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Timestamp } from "firebase/firestore";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { formSchema } from "../data/schema";
+import { TaskSchema, formSchema } from "../data/schema";
 
 interface EditTaskProps {
   id: string;
   open: boolean;
   setOpen: (value: boolean) => void;
 }
-
-type EditTaskForm = z.infer<typeof formSchema>;
 
 export function DialogEditTask({ id, open, setOpen }: EditTaskProps) {
   const { documents } = useFetchDocuments({
@@ -47,9 +45,9 @@ export function DialogEditTask({ id, open, setOpen }: EditTaskProps) {
     finishInString = finishInTimestamp.toISOString().slice(0, 16);
   }
 
-  const form = useForm<EditTaskForm>({
+  const form = useForm<TaskSchema>({
     resolver: zodResolver(formSchema),
-    values: {
+    defaultValues: {
       title: document?.title || "",
       description: document?.description || "",
       finishIn: finishInString || "",

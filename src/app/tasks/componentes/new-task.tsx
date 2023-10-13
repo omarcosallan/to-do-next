@@ -24,7 +24,7 @@ import { Timestamp } from "firebase/firestore";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { formSchema } from "../data/schema";
+import { TaskSchema, formSchema } from "../data/schema";
 
 export function DialogNewTask() {
   const [open, setOpen] = useState(false);
@@ -34,13 +34,8 @@ export function DialogNewTask() {
     docCollection: "tasks",
   });
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<TaskSchema>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: "",
-      description: "",
-      finishIn: "",
-    },
   });
 
   function onSubmit(data: z.infer<typeof formSchema>) {

@@ -7,6 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useEditDocument } from "@/hooks/useEditDocument";
+import { Task } from "@/types/task";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Row } from "@tanstack/react-table";
 import { Timestamp } from "firebase/firestore";
@@ -26,12 +27,14 @@ export function DataTableRowActions<TData>({
 
   const { editDocument } = useEditDocument("tasks");
 
-  function handleConcluded(id) {
+  const task = row.original as Task;
+
+  function handleConcluded() {
     const updatedData = {
       concluded: !row.getValue("concluded"),
       concludedAt: Timestamp.now(),
     };
-    editDocument(id, updatedData);
+    editDocument(task.id, updatedData);
   }
 
   return (
@@ -46,7 +49,7 @@ export function DataTableRowActions<TData>({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuItem onSelect={() => handleConcluded(row.original.id)}>
+          <DropdownMenuItem onSelect={() => handleConcluded()}>
             Concluir
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -61,14 +64,10 @@ export function DataTableRowActions<TData>({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <DialogEditTask
-        id={row.original.id}
-        open={openEdit}
-        setOpen={setOpenEdit}
-      />
+      <DialogEditTask id={task.id} open={openEdit} setOpen={setOpenEdit} />
 
       <AlertDialogDeleteTask
-        id={row.original.id}
+        id={task.id}
         open={openDelete}
         setOpen={setOpenDelete}
       />

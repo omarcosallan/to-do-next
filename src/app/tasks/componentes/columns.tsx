@@ -1,5 +1,6 @@
 import { Task } from "@/types/task";
 import { ColumnDef } from "@tanstack/react-table";
+import { Timestamp } from "firebase/firestore";
 import { statuses } from "../data/data";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
@@ -26,9 +27,12 @@ export const columns: ColumnDef<Task>[] = [
       );
     },
     cell: ({ row }) => {
-      const createIn = row.getValue("createdAt").toDate().toLocaleString();
-      const date = new Date(createIn.seconds * 1000);
-      return <div className="flex items-center">{createIn}</div>;
+      const createIn = row.getValue("createdAt") as Timestamp;
+      return (
+        <div className="flex items-center">
+          {createIn.toDate().toLocaleString()}
+        </div>
+      );
     },
   },
   {
@@ -43,9 +47,12 @@ export const columns: ColumnDef<Task>[] = [
       );
     },
     cell: ({ row }) => {
-      const createIn = row.getValue("finishIn").toDate().toLocaleString();
-      const date = new Date(createIn.seconds * 1000);
-      return <div className="flex items-center">{createIn}</div>;
+      const finishIn = row.getValue("finishIn") as Timestamp;
+      return (
+        <div className="flex items-center">
+          {finishIn.toDate().toLocaleString()}
+        </div>
+      );
     },
   },
   {
@@ -61,7 +68,7 @@ export const columns: ColumnDef<Task>[] = [
     },
     cell: ({ row }) => {
       const status = statuses.find((status) => {
-        return status.value === row.getValue("concluded");
+        return JSON.parse(status.value) === row.getValue("concluded");
       });
 
       if (!status) {
@@ -78,7 +85,8 @@ export const columns: ColumnDef<Task>[] = [
       );
     },
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
+      const status = row.getValue(id) as string;
+      return value.includes(status.toString());
     },
   },
   {

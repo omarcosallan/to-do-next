@@ -6,14 +6,16 @@ export default async function middleware(request: NextRequest) {
   const signInURL = new URL("/", request.url);
   const taskURL = new URL("/tasks", request.url);
 
-  // Verifique se o middleware deve ser aplicado apenas nas rotas especificadas
-  const protectedRoutes = ["/", "/tasks", "/dashboard"];
-  const currentPath = request.nextUrl.pathname;
-
-  if (!token && protectedRoutes.includes(currentPath)) {
-    if (currentPath === "/") return NextResponse.next();
+  if (!token) {
+    if (request.nextUrl.pathname === "/") return NextResponse.next();
     return NextResponse.redirect(signInURL);
   }
 
-  return NextResponse.next();
+  if (request.nextUrl.pathname != "/") {
+    return NextResponse.next();
+  }
 }
+
+export const config = {
+  matcher: ["/", "/tasks", "/dashboard"],
+};
