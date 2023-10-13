@@ -30,7 +30,7 @@ const deleteReducer = (state: DeleteState, action: DeleteAction) => {
   }
 };
 
-export function useDeleteDocument(docCollection: "string") {
+export function useDeleteDocument(docCollection: string) {
   const [response, dispatch] = useReducer(deleteReducer, initialState);
 
   const [cancelled, setCancelled] = useState(false);
