@@ -1,9 +1,10 @@
 "use client";
+
 import { useFetchDocuments } from "@/hooks/useFetchDocuments";
 import { columns } from "./componentes/columns";
 import { DataTable } from "./componentes/data-table";
 
-export default function TaskList() {
+export default function Tasks() {
   const { documents } = useFetchDocuments({
     docCollection: "tasks",
   });
