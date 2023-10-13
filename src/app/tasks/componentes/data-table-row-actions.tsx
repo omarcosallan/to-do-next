@@ -3,10 +3,13 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useEditDocument } from "@/hooks/useEditDocument";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Row } from "@tanstack/react-table";
+import { Timestamp } from "firebase/firestore";
 import { useState } from "react";
 import { AlertDialogDeleteTask } from "./delete-tasks";
 import { DialogEditTask } from "./edit-task";
@@ -21,6 +24,16 @@ export function DataTableRowActions<TData>({
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
 
+  const { editDocument } = useEditDocument("tasks");
+
+  function handleConcluded(id) {
+    const updatedData = {
+      concluded: !row.getValue("concluded"),
+      concludedAt: Timestamp.now(),
+    };
+    editDocument(id, updatedData);
+  }
+
   return (
     <>
       <DropdownMenu>
@@ -33,6 +46,10 @@ export function DataTableRowActions<TData>({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
+          <DropdownMenuItem onSelect={() => handleConcluded(row.original.id)}>
+            Concluir
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem onSelect={() => setOpenEdit(true)}>
             Editar
           </DropdownMenuItem>

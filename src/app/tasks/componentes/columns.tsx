@@ -12,15 +12,38 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: "description",
     header: "Description",
-    cell: ({ row }) => (
-      <div className="w-[600px]">{row.getValue("description")}</div>
-    ),
+    cell: ({ row }) => <div className="">{row.getValue("description")}</div>,
   },
   {
     accessorKey: "createdAt",
-    header: "Created in",
+    header: ({ column }) => {
+      return (
+        <DataTableColumnHeader
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          column={column}
+          title="Created in"
+        />
+      );
+    },
     cell: ({ row }) => {
       const createIn = row.getValue("createdAt").toDate().toLocaleString();
+      const date = new Date(createIn.seconds * 1000);
+      return <div className="flex items-center">{createIn}</div>;
+    },
+  },
+  {
+    accessorKey: "finishIn",
+    header: ({ column }) => {
+      return (
+        <DataTableColumnHeader
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          column={column}
+          title="Finish in"
+        />
+      );
+    },
+    cell: ({ row }) => {
+      const createIn = row.getValue("finishIn").toDate().toLocaleString();
       const date = new Date(createIn.seconds * 1000);
       return <div className="flex items-center">{createIn}</div>;
     },
