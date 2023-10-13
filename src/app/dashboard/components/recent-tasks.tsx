@@ -17,7 +17,7 @@ export function RecentTaks() {
           <div key={task.id} className="flex items-center gap-2">
             <Avatar className="h-9 w-9">
               <AvatarImage
-                src={user?.photoURL}
+                src={user?.photoURL ? user?.photoURL : ""}
                 alt={`Photo ${user?.displayName}`}
               />
               <AvatarFallback>
