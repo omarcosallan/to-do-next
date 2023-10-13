@@ -47,7 +47,7 @@ export function DialogEditTask({ id, open, setOpen }: EditTaskProps) {
 
   const form = useForm<TaskSchema>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    values: {
       title: document?.title || "",
       description: document?.description || "",
       finishIn: finishInString || "",
