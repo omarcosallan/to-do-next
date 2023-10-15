@@ -50,7 +50,7 @@ export function DataTableRowActions<TData>({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
           <DropdownMenuItem onSelect={() => handleConcluded()}>
-            Concluir
+            {task.concluded ? "Desmarcar" : "Concluir"}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onSelect={() => setOpenEdit(true)}>
@@ -65,7 +65,6 @@ export function DataTableRowActions<TData>({
         </DropdownMenuContent>
       </DropdownMenu>
       <DialogEditTask id={task.id} open={openEdit} setOpen={setOpenEdit} />
-
       <AlertDialogDeleteTask
         id={task.id}
         open={openDelete}

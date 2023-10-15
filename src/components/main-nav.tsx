@@ -7,7 +7,8 @@ import { Separator } from "./ui/separator";
 import UserNav from "./user-nav";
 
 export function MainNav() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+
   return (
     <nav>
       <div className="flex justify-between items-center px-5 md:px-20 py-3">
@@ -15,7 +16,7 @@ export function MainNav() {
           TO DO LIST
         </Link>
         <div className="flex items-center gap-4">
-          {user && <UserNav />}
+          {user && <UserNav user={user} logout={logout} />}
           <ModeToggle />
         </div>
       </div>

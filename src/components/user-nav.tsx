@@ -1,7 +1,6 @@
 "use client";
 
-import { useAuth } from "@/context/AuthContext";
-
+import { User } from "firebase/auth";
 import Link from "next/link";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -16,9 +15,13 @@ import {
 } from "./ui/dropdown-menu";
 import { Separator } from "./ui/separator";
 
-export default function UserNav() {
+interface UserNavProps {
+  user: User;
+  logout: () => void;
+}
+
+export default function UserNav({ user, logout }: UserNavProps) {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const { user, logout } = useAuth();
 
   return (
     <DropdownMenu open={isOpenMenu} onOpenChange={setIsOpenMenu}>

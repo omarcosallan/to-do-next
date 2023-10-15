@@ -94,14 +94,14 @@ export function useAuth() {
   return context;
 }
 
-function setAuthCookie(token: string, age: number) {
+export function setAuthCookie(token: string, age: number) {
   setCookie(null, "task-authToken", token, {
     maxAge: age,
     path: "/",
   });
 }
 
-function removeAuthCookie() {
+export function removeAuthCookie() {
   destroyCookie(null, "task-authToken", {
     path: "/",
   });
