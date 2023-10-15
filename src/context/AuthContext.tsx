@@ -1,10 +1,9 @@
 "use client";
 
-import { app } from "@/firebase/firebase";
+import { auth } from "@/firebase/firebase";
 import {
   GoogleAuthProvider,
   User,
-  getAuth,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
@@ -32,7 +31,6 @@ interface AuthProps {
 
 export function AuthContextProvider({ children }: AuthProps) {
   const [user, setUser] = useState<User | null | undefined>(null);
-  const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
   const router = useRouter();
 

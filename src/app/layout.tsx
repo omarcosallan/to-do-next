@@ -21,12 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${nunito.className} min-h-screen`}>
         <AuthContextProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <MainNav />
             <div className="flex flex-col text-center justify-center items-center px-5 md:px-20">
               {children}
