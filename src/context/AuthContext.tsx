@@ -37,16 +37,14 @@ export function AuthContextProvider({ children }: AuthProps) {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        user
-          .getIdTokenResult()
-          .then((result) =>
-            setAuthCookie(
-              result.token,
-              new Date(result.expirationTime).getTime()
-            )
+        user.getIdTokenResult().then((result) => {
+          setAuthCookie(
+            result.token,
+            new Date(result.expirationTime).getTime()
           );
-        setUser(user);
-        router.push("/tasks");
+          setUser(user);
+          router.push("/tasks");
+        });
       } else {
         removeAuthCookie();
         setUser(null);
@@ -63,9 +61,9 @@ export function AuthContextProvider({ children }: AuthProps) {
             result.token,
             new Date(result.expirationTime).getTime()
           );
+          router.push("/tasks");
+          setUser(data.user);
         });
-        setUser(data.user);
-        router.push("/tasks");
       })
       .catch((error) => {
         console.log(error);
@@ -93,14 +91,25 @@ export function useAuth() {
 }
 
 export function setAuthCookie(token: string, age: number) {
-  setCookie(null, "task-authToken", token, {
+  const cookieOptions = {
     maxAge: age,
     path: "/",
-  });
+    sameSite: "Lax",
+    secure: process.env.NODE_ENV === "production",
+  };
+
+  setCookie(null, "task-authToken", token, cookieOptions);
 }
 
 export function removeAuthCookie() {
+  const cookieOptions = {
+    path: "/",
+    sameSite: "Lax",
+    secure: process.env.NODE_ENV === "production",
+  };
+
   destroyCookie(null, "task-authToken", {
     path: "/",
+    cookieOptions,
   });
 }
