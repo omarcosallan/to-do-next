@@ -7,21 +7,13 @@ export default async function middleware(request: NextRequest) {
   const taskURL = new URL("/tasks", request.url);
 
   if (!token) {
-    if (request.nextUrl.pathname === "/") {
-      return NextResponse.next();
-    }
+    if (request.nextUrl.pathname === "/") return NextResponse.next();
     return NextResponse.redirect(signInURL);
   }
 
-  if (request.nextUrl.pathname === "/") {
-    return NextResponse.redirect(taskURL);
-  }
-
-  if (request.nextUrl.pathname === "/dashboard") {
+  if (request.nextUrl.pathname != "/") {
     return NextResponse.next();
   }
-
-  return NextResponse.next();
 }
 
 export const config = {
