@@ -11,9 +11,11 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.redirect(signInURL);
   }
 
-  if (request.nextUrl.pathname != "/") {
-    return NextResponse.next();
+  if (request.nextUrl.pathname === "/") {
+    return NextResponse.redirect(taskURL);
   }
+
+  return NextResponse.next();
 }
 
 export const config = {

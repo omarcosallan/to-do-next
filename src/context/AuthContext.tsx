@@ -61,11 +61,10 @@ export function AuthContextProvider({ children }: AuthProps) {
             result.token,
             new Date(result.expirationTime).getTime()
           );
+          router.push("/tasks");
         });
         setUser(data.user);
-        router.push("/tasks");
       })
-      .then(() => {})
       .catch((error) => {
         console.log(error);
       });
