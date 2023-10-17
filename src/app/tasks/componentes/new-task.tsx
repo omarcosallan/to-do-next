@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -59,11 +58,7 @@ export function DialogNewTask() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[475px]">
         <DialogHeader>
-          <DialogTitle>Save preset</DialogTitle>
-          <DialogDescription>
-            This will save the current playground state as a preset which you
-            can access later or share with others.
-          </DialogDescription>
+          <DialogTitle>New task</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -72,7 +67,7 @@ export function DialogNewTask() {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Título:</FormLabel>
+                  <FormLabel>Title:</FormLabel>
                   <FormControl>
                     <Input placeholder="Título da tarefa" {...field} />
                   </FormControl>
@@ -85,7 +80,7 @@ export function DialogNewTask() {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Descrição:</FormLabel>
+                  <FormLabel>Description:</FormLabel>
                   <FormControl>
                     <Input placeholder="Descreva sua atividade" {...field} />
                   </FormControl>
@@ -98,7 +93,7 @@ export function DialogNewTask() {
               name="finishIn"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Data de vencimento:</FormLabel>
+                  <FormLabel>Due date:</FormLabel>
                   <FormControl>
                     <Input type="datetime-local" {...field} />
                   </FormControl>

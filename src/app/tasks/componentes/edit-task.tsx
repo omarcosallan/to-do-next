@@ -68,7 +68,7 @@ export function DialogEditTask({ id, open, setOpen }: EditTaskProps) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Editar tarefa</DialogTitle>
+          <DialogTitle>Edit task</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -77,7 +77,7 @@ export function DialogEditTask({ id, open, setOpen }: EditTaskProps) {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Título:</FormLabel>
+                  <FormLabel>Title:</FormLabel>
                   <FormControl>
                     <Input placeholder="Título da tarefa" {...field} />
                   </FormControl>
@@ -90,7 +90,7 @@ export function DialogEditTask({ id, open, setOpen }: EditTaskProps) {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Descrição:</FormLabel>
+                  <FormLabel>Description:</FormLabel>
                   <FormControl>
                     <Input placeholder="Descreva sua atividade" {...field} />
                   </FormControl>
@@ -103,7 +103,7 @@ export function DialogEditTask({ id, open, setOpen }: EditTaskProps) {
               name="finishIn"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Data de vencimento:</FormLabel>
+                  <FormLabel>Due date:</FormLabel>
                   <FormControl>
                     <Input type="datetime-local" {...field} />
                   </FormControl>

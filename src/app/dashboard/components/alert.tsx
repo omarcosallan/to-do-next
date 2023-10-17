@@ -25,7 +25,7 @@ export function Alert({ icon, description }: AlertProps) {
       </CardContent>
       <CardFooter className="w-full">
         <Button className="w-full">
-          <Link href={"/tasks"}>Tarefas</Link>
+          <Link href={"/tasks"}>Tasks</Link>
         </Button>
       </CardFooter>
     </Card>

@@ -14,7 +14,7 @@ export function RecentTaks() {
     <div className="space-y-8">
       {recentsTask &&
         recentsTask.map((task) => (
-          <div key={task.id} className="flex items-center gap-2">
+          <div key={task.id} className="flex items-center gap-2 w-full">
             <Avatar className="h-9 w-9">
               <AvatarImage
                 src={user?.photoURL ? user?.photoURL : ""}
@@ -31,7 +31,7 @@ export function RecentTaks() {
               </p>
             </div>
             <div className="ml-auto text-sm text-muted-foreground">
-              {task.concluded ? "Concluida" : "Pendente"}
+              {task.concluded ? "Concluded" : "Pending"}
             </div>
           </div>
         ))}

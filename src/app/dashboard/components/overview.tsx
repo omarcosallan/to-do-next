@@ -30,19 +30,19 @@ export function Overview({ documents }: GraphicProps) {
 
   const data = [
     {
-      name: "Todas",
+      name: "All",
       total: totalDocumentsPercentage,
     },
     {
-      name: "Concluidas",
+      name: "Completed",
       total: concludedPercentage,
     },
     {
-      name: "Expiradas",
+      name: "Expired",
       total: expiredPercentage,
     },
     {
-      name: "Pendentes",
+      name: "Pending",
       total: pendingPercentage,
     },
   ];

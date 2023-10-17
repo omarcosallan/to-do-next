@@ -1,6 +1,6 @@
 "use client";
 
-import { User } from "firebase/auth";
+import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -15,12 +15,8 @@ import {
 } from "./ui/dropdown-menu";
 import { Separator } from "./ui/separator";
 
-interface UserNavProps {
-  user: User;
-  logout: () => void;
-}
-
-export default function UserNav({ user, logout }: UserNavProps) {
+export default function UserNav() {
+  const { user, logout } = useAuth();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   return (
@@ -48,7 +44,7 @@ export default function UserNav({ user, logout }: UserNavProps) {
         <DropdownMenuGroup>
           <DropdownMenuItem onClick={() => setIsOpenMenu(false)}>
             <Link className="w-full" href="/tasks">
-              Tarefas
+              Tasks
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setIsOpenMenu(false)}>
@@ -61,7 +57,7 @@ export default function UserNav({ user, logout }: UserNavProps) {
         <DropdownMenuGroup>
           <DropdownMenuItem>
             <Button className="w-full" onClick={() => logout()}>
-              Sair
+              Logout
             </Button>
           </DropdownMenuItem>
         </DropdownMenuGroup>

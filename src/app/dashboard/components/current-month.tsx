@@ -23,7 +23,7 @@ export function CurrentMonth({ documents }: CurrentMonthProps) {
   );
 
   return (
-    <div className="flex flex-col items-center p-2 w-full">
+    <div className="flex flex-col items-center p-2">
       {tasksForTheCurrentMonth.length <= 0 ? (
         <>
           <div>
@@ -32,25 +32,25 @@ export function CurrentMonth({ documents }: CurrentMonthProps) {
         </>
       ) : (
         <>
-          <div className="flex items-center flex-col gap-10 sm:gap-14 sm:flex-row">
-            <div className="flex flex-col gap-8 w-max text-left">
-              <p className="flex gap-8 items-center justify-between w-full">
+          <div className="flex items-center flex-col gap-4">
+            <GraphicCurrentMonth documents={tasksForTheCurrentMonth} />
+            <div className="flex justify-center text-xs flex-wrap gap-4">
+              <p className="flex items-center gap-2">
                 Tarefas <span>{tasksForTheCurrentMonth.length}</span>
               </p>
-              <p className="flex gap-8 items-center justify-between w-full">
+              <p className="flex items-center gap-2">
                 Concluidas
                 <span>{tasksForTheCurrentMonthConcluded.length}</span>
               </p>
-              <p className="flex gap-8 items-center justify-between w-full">
+              <p className="flex items-center gap-2">
                 Expiradas
                 <span>{tasksForTheCurrentMonthExpired.length}</span>
               </p>
-              <p className="flex gap-8 items-center justify-between w-full">
+              <p className="flex items-center gap-2">
                 Não concluidas
                 <span>{tasksForTheCurrentMonthPending.length}</span>
               </p>
             </div>
-            <GraphicCurrentMonth documents={tasksForTheCurrentMonth} />
           </div>
         </>
       )}

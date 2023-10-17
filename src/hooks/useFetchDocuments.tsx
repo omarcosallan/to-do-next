@@ -9,7 +9,6 @@ import {
   where,
 } from "firebase/firestore";
 import error from "next/error";
-import { type } from "os";
 import { useEffect, useState } from "react";
 
 interface FetchDocumentsProps {
@@ -20,6 +19,7 @@ export function useFetchDocuments({ docCollection }: FetchDocumentsProps) {
   const { user } = useAuth();
   const [documents, setDocuments] = useState<Task[]>([]);
   const [isFetching, setIsFetching] = useState(true);
+
   useEffect(() => {
     if (!user) return;
 
@@ -48,7 +48,7 @@ export function useFetchDocuments({ docCollection }: FetchDocumentsProps) {
     }
 
     loadData();
-  }, [docCollection, user, type]);
+  }, [docCollection, user]);
 
   return { documents, isFetching, error };
 }

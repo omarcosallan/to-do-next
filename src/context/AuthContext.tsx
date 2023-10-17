@@ -57,11 +57,11 @@ export function AuthContextProvider({ children }: AuthProps) {
     signInWithPopup(auth, provider)
       .then((data) => {
         data.user.getIdTokenResult().then((result) => {
+          router.push("/tasks");
           setAuthCookie(
             result.token,
             new Date(result.expirationTime).getTime()
           );
-          router.push("/tasks");
         });
         setUser(data.user);
       })

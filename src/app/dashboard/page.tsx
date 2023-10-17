@@ -90,9 +90,7 @@ export default function Dashboard() {
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                   <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="text-sm font-medium">
-                        All tasks
-                      </CardTitle>
+                      <CardTitle className="text-sm font-medium">All</CardTitle>
                       <FileTextIcon className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
@@ -119,7 +117,7 @@ export default function Dashboard() {
                   <Card>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                       <CardTitle className="text-sm font-medium">
-                        Not completed
+                        Pending
                       </CardTitle>
                       <CrossCircledIcon className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
@@ -149,7 +147,7 @@ export default function Dashboard() {
                 <div className="flex flex-col gap-4 md:grid md:grid-cols-2 lg:grid-cols-7">
                   <Card className="col-span-4 flex flex-col justify-between">
                     <CardHeader>
-                      <CardTitle>Visão geral</CardTitle>
+                      <CardTitle>Overview</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <Overview documents={documents} />
@@ -158,10 +156,10 @@ export default function Dashboard() {
 
                   <Card className="col-span-3">
                     <CardHeader>
-                      <CardTitle>Tarefas recentes</CardTitle>
+                      <CardTitle>Recent tasks</CardTitle>
                       <CardDescription>
-                        Encontre aqui as tarefas mais recentes realizadas ou em
-                        andamento.
+                        Find the most recent tasks completed or in progress
+                        here.
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -170,13 +168,13 @@ export default function Dashboard() {
                   </Card>
                 </div>
 
-                <div className="flex flex-col gap-4 md:grid md:grid-cols-2 lg:grid-cols-7">
-                  <Card className="col-span-3 flex flex-col justify-between">
+                <div className="flex flex-col w-full gap-4 md:grid md:grid-cols-2 lg:grid-cols-7">
+                  <Card className="col-span-2 flex flex-col justify-between w-full">
                     <CardHeader>
-                      <CardTitle>Mês atual</CardTitle>
+                      <CardTitle>Current month</CardTitle>
                       <CardDescription>
-                        Encontre aqui as tarefas mais recentes realizadas ou em
-                        andamento.
+                        Track the progress of your tasks and commitments for the
+                        current month here.
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -184,9 +182,9 @@ export default function Dashboard() {
                     </CardContent>
                   </Card>
 
-                  <Card className="col-span-4 flex flex-col justify-between">
+                  <Card className="col-span-5 flex flex-col justify-between">
                     <CardHeader>
-                      <CardTitle>Tarefas mensais</CardTitle>
+                      <CardTitle>Monthly tasks</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <Months documents={documents} />
